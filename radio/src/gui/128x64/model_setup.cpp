@@ -77,6 +77,7 @@ enum MenuModelSetupItems {
 #if defined(MULTIMODULE)
   ITEM_MODEL_EXTERNAL_MODULE_AUTOBIND,
   ITEM_MODEL_EXTERNAL_MODULE_LOWPOWER,
+  ITEM_MODEL_EXTERNAL_MODULE_STATUS,
 #endif
 #if defined(PCBSKY9X) && !defined(REVA)
   ITEM_MODEL_EXTRA_MODULE_LABEL,
@@ -963,6 +964,15 @@ void menuModelSetup(event_t event)
     case  ITEM_MODEL_EXTERNAL_MODULE_LOWPOWER:
       g_model.moduleData[EXTERNAL_MODULE].multi.lowPowerMode = editCheckBox(g_model.moduleData[EXTERNAL_MODULE].multi.lowPowerMode, MODEL_SETUP_2ND_COLUMN, y, STR_MULTI_LOWPOWER, attr, event);
       break;
+    case ITEM_MODEL_EXTERNAL_MODULE_STATUS: {
+      lcdDrawTextAlignedLeft(y, STR_MODULE_STATUS);
+
+      char statusText[64];
+      multiModuleStatus.getStatusString(statusText);
+      lcdDrawText(MODEL_SETUP_2ND_COLUMN, y, statusText);
+      break;
+    }
+
 #endif
 #endif
 

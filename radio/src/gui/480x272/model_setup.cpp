@@ -75,6 +75,7 @@ enum MenuModelSetupItems {
 #if defined(MULTIMODULE)
   ITEM_MODEL_EXTERNAL_MODULE_AUTOBIND,
   ITEM_MODEL_EXTERNAL_MODULE_LOWPOWER,
+  ITEM_MODEL_EXTERNAL_MODULE_STATUS,
 #endif
   ITEM_MODEL_TRAINER_LABEL,
   ITEM_MODEL_TRAINER_MODE,
@@ -955,6 +956,14 @@ bool menuModelSetup(event_t event)
       lcdDrawText(MENUS_MARGIN_LEFT, y, STR_MULTI_LOWPOWER);
       g_model.moduleData[EXTERNAL_MODULE].multi.lowPowerMode = editCheckBox(g_model.moduleData[EXTERNAL_MODULE].multi.lowPowerMode, MODEL_SETUP_2ND_COLUMN, y, attr, event);
       break;
+    case ITEM_MODEL_EXTERNAL_MODULE_STATUS: {
+      lcdDrawText(MENUS_MARGIN_LEFT, y, STR_MODULE_STATUS);
+
+      char statusText[64];
+      multiModuleStatus.getStatusString(statusText);
+      lcdDrawText(MODEL_SETUP_2ND_COLUMN, y, statusText);
+      break;
+    }
 #endif
     }
   }
