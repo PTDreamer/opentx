@@ -401,12 +401,26 @@ void lcdDrawNumber(coord_t x, coord_t y, int32_t val, LcdFlags flags, uint8_t le
 
   if (dblsize) {
     fw += FWNUM;
+    if (!(flags & RIGHT)) {
+      x-=1;
+    }
   }
   else if (xxlsize) {
     fw += 4*FWNUM-1;
+    if (!(flags & RIGHT)) {
+      if (flags & PREC1) {
+        x += 15;
+      }
+      else {
+        x-=2;
+      }
+    }
   }
   else if (midsize) {
     fw += FWNUM-3;
+    if ((flags & PREC1) && !(flags & RIGHT)) {
+      x += 4;
+    }
   }
   else if (tinsize) {
     fw -= 1;
@@ -416,7 +430,9 @@ void lcdDrawNumber(coord_t x, coord_t y, int32_t val, LcdFlags flags, uint8_t le
       if (mode > 0)
         x += 2;
     }
-    if (flags & BOLD) fw += 1;
+    if (flags & BOLD) {
+      fw += 1;
+    }
   }
 
   if (!(flags & RIGHT)) {
